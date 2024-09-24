@@ -2,7 +2,7 @@ import React from 'react';
 import useFetch from './useFetch';
 
 const ProductDetail = ({ productId }) => {
-    const baseUrl = 'https://example.com/api'; // Base URL'inizi buraya yazın
+    const baseUrl = 'https://example.com/api'; 
     const { data, loading, error } = useFetch(baseUrl, productId);
 
     if (loading) return <div>Loading...</div>;
