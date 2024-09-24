@@ -1,36 +1,21 @@
-import { useState,useEffect } from 'react'
-import {Link,useParams} from 'react-router-dom'
+import React from 'react';
+import useFetch from './useFetch';
 
-export default function ProductDetails() {
-  const [product, setProduct] = useState({})
-const {id}=useParams();
-useEffect(()=>{
-  async function fetchProductDetails() {
-    try {
-      const response=await fetch(
-        `https://router-12f10-default-rtdb.europe-west1.firebasedatabase.app/productdetails/id${id}.json`
-        
-      )
-      const data=await response.json();
-      setProduct(data)
-    }catch(error){
-      console.error('Error fetching product details:',error)
-    }
-  
-  }
-  fetchProductDetails();},[id]);
+const ProductDetail = ({ productId }) => {
+    const baseUrl = 'https://example.com/api'; // Base URL'inizi buraya yazın
+    const { data, loading, error } = useFetch(baseUrl, productId);
 
-  return (
-    <div>
-      <Link to="/">Back Home</Link>
-      {product && (
+    if (loading) return <div>Loading...</div>;
+    if (error) return <div>Error: {error}</div>;
+
+    return (
         <div>
-          <h2>{product.name}</h2>
-          <p>{product.description}</p>
-          <h3>${product.price}</h3>
-          <img src={product.image} width='100' alt={product.name} />
+            <h1>{data.name}</h1>
+            <p>{data.description}</p>
+            <p>Price: ${data.price}</p>
         </div>
-      )}
-    </div>
-  )
-}
+    );
+};
+
+export default ProductDetail;
+
